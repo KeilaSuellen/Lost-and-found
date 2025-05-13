@@ -15,7 +15,7 @@
 
   <div class="content">
     <div class="grid">
-      <a href="cadastro.html" class="btn">
+      <a href="registroobj.html" class="btn">
         <img src="#" alt="Cadastro">
         <p>Cadastros objetos</p>
       </a>
@@ -38,7 +38,18 @@
     </div>
   </div>
 
-  <button class="exit-btn">Sair</button>
+  <button class="exit-btn" onclick="sair()" >Sair</button>
+  
+  <script>
+    const nomeUsuario = localStorage.getItem("nomeUsuario");
+    if (nomeUsuario) {
+      document.querySelector(".header h1").textContent = `Olá, ${nomeUsuario}`;
+    } 
 
+    function sair() {
+      localStorage.removeItem("nomeUsuario");
+      window.location.href = "login.html";
+    }
+    </script>
 </body>
 </html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Devolução de Obejetos</title>
+</head>
+<body>
+    <div class="nav" id="myTopnav">
+        <img src="img/logo.png" alt="Logo" width="90" height="90" />
+        <a href="index.html">Menu Principal</a>
+        <a href="registroobj.html">Cadastro de Objetos</a>
+        <a href="devolucao.html" class="active">Devolução de Objetos</a>
+        <a href="relatorio.html">Relatório</a>
+        <a href="#">Status</a>
+        <a href="#">Gerenciamento de Usuário</a>
+        <a href="login.html" class="split">Sair</a>
+    </div>
+
+    <h2>Devolução de Objetos</h2>
+    <p>Preencha os campos abaixo para registrar a devolução de um objeto.</p>
+    <p>Certifique-se de que todas as informações estão corretas.</p>
+     
+    <button type="button" onclick="window.location.href='imprimir_retirada.html'">Imprimir Comprovante</button>
+
+
+    <form action="#">
+        <label for="id_objeto">ID do Objeto:</label>
+        <input type="text" id="id_objeto" name="id_objeto" required />
+
+        <label for="nome">Nome de quem retirou:</label>
+        <input type="text" id="nome" name="nome" required />
+        
+        <label for="doc">Documeto:</label>
+        <input type="text" id="doc" name="doc" required />
+        
+        <label for="empresa">Empresa:</label>
+        <input type="text" id="empresa" name="empresa" required />
+        
+        <label for="data">Data da Devolução:</label>
+        <input type="date" id="data_devolucao" name="data_devolucao" required />    
+
+        <label for="observações">observaçoes (opcional):</label>
+        <textarea id="observacoes" name="observacoes"></textarea>
+
+        
+
+        <div class="form-footer">
+        <button type="submit">Registrar Devolução</button>
+        </div>
+    </form>
+    
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/relatorio.css">
+  <link rel="stylesheet" href="css/style.css">
+  <title>Relatório</title>
+</head>
+<style>
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+
+  th {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+</style>
+<body>
+  <div class="nav" id="myTopnav">
+    <img src="img/logo.png" alt="Logo" width="90" height="90" />
+    <a href="index.html">Menu Principal</a>
+    <a href="registroobj.html">Cadastro de Objetos</a>
+    <a href="devolucao.html">Devolução de Objetos</a>
+    <a href="#" class="active">Relatório</a>
+    <a href="#">Status</a>
+    <a href="#">Gerenciamento de Usuário</a>
+    <a href="login.html" class="split">Sair</a>
+  </div>
+  
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Tipo</th>
+        <th>Descrição</th>
+        <th>Data de Registro</th>
+        <th>Data de Devolução</th>
+        <th>Status</th>
+        <th>operador</th>
+        <th>Observações</th>
+      </tr>
+    </thead>
+    <tbody id="relatorio-body">
+      <!-- Os dados do relatório serão inseridos aqui -->
+    </tbody>
+  </table>
+
+  <script>
+    // Simulação de dados do relatório
+    const relatorioDados = [
+      // Exemplo de dados, você pode substituir por dados reais
+      { id: 1, nome: 'Objeto A', tipo: 'Tipo A', descricao: 'Descrição do Objeto A', dataRegistro: '2023-10-01', dataDevolucao: '2023-10-10', status: 'Disponível', operador: 'Operador A', observacoes: 'Nenhuma' },
+      { id: 2, nome: 'Objeto B', tipo: 'Tipo B', descricao: 'Descrição do Objeto B', dataRegistro: '2023-10-02', dataDevolucao: '2023-10-12', status: 'Indisponível', operador: 'Operador B', observacoes: 'Nenhuma' },
+      // Adicione mais objetos conforme necessário
+    ];
+
+    const relatorioBody = document.getElementById('relatorio-body');
+
+    relatorioDados.forEach(item => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${item.id}</td>
+        <td>${item.nome}</td>
+        <td>${item.tipo}</td>
+        <td>${item.descricao}</td>
+        <td>${item.dataRegistro}</td>
+        <td>${item.dataDevolucao}</td>
+        <td>${item.status}</td>
+        <td>${item.operador}</td>
+        <td>${item.observacoes}</td>
+      `;
+      relatorioBody.appendChild(row);
+    });
+  </script>
+  
+</body>
+</html>

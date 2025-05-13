@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/status.css">
+    <title>Status Objetos</title>
+</head>
+<body>
+    <div class="nav" id="myTopnav">
+        <img src="img/logo.png" alt="Logo" width="90" height="90" />
+        <a href="index.html">Menu Principal</a>
+        <a href="registroobj.html">Cadastro de Objetos</a>
+        <a href="devolucao.html">Devolução de Objetos</a>
+        <a href="#">Relatório</a>
+        <a href="#" class="active">Status</a>
+        <a href="#">Gerenciamento de Usuário</a>
+        <a href="login.html" class="split">Sair</a>
+    </div>
+
+   <!-- tabela mostrando se o objeto está desponivel com id  -->
+    <div class="container">
+        <h1>Status dos Objetos</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Tipo</th>
+                    <th>Descrição</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="status-body">
+                <!-- Os dados do status serão inseridos aqui -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="js/status.js"></script>
+
+    
+</body>
+</html>
