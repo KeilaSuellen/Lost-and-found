@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Status dos Objetos</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/status.css">
+</head>
+<body>
+
+  <header>
+  <nav id="navbar">
+    <img src="img/logo.png" id="logo" width="110" />
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+
+    <ul id="nav-list">
+      <li class="nav-item"><a href="index.php">Menu Principal</a></li>
+      <li class="nav-item"><a href="registroobj.php" >Cadastro de Objetos</a></li>
+      <li class="nav-item"><a href="devolucao.php">Devolução de Objetos</a></li>
+      <li class="nav-item"><a href="relatorio.html">Relatório</a></li>
+      <li class="nav-item"><a href="status.html" class="active">Status</a></li>
+      <li class="nav-item"><a href="#">Gerenciamento de Usuário</a></li>
+      <li class="nav-item"><a href="logout.php" class="split">Sair</a></li>
+    </ul>  
+  </nav>
+</header>
+
+  <div class="container">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Tipo</th>
+          <th>Descrição</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="status-body">
+        <!-- Conteúdo carregado por JavaScript -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    fetch('status_objetos.php')
+      .then(response => response.json())
+      .then(dados => {
+        const tbody = document.getElementById('status-body');
+
+        dados.forEach(obj => {
+          const row = document.createElement('tr');
+          const statusClasse = obj.status === 'Devolvido' ? 'status-devolvido' :
+                               obj.status === 'Arquivado' ? 'status-arquivado' :
+                               'status-disponivel';
+
+          row.innerHTML = `
+            <td>${obj.id_objeto}</td>
+            <td>${obj.nome_objeto}</td>
+            <td>${obj.tipo_objeto}</td>
+            <td>${obj.descricao}</td>
+            <td class="${statusClasse}">${obj.status}</td>
+          `;
+          tbody.appendChild(row);
+        });
+      })
+      .catch(error => {
+        console.error('Erro ao buscar os dados:', error);
+      });
+  </script>
+</body>
+</html>

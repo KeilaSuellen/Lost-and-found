@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/style.css" />
-    <title>Novo Cadastro</title>
-  </head>
-  <body>
+
+<?php if (isset($erro)): ?>
+  <div style="color:red; text-align:center;"><?php echo $erro; ?></div>
+<?php endif; ?>
   
     <div class="login-container">
       <div class="login-box">
@@ -15,15 +10,18 @@
           <header>Novo Cadastro</header>
         </div>
 
+        <form action="cadastro.php" method="POST">
         <div class="input-box">
           <input
             type="text"
+            name="usuario"
             class="input-field"
             placeholder="Usuário"
             required
           />
           <input
             type="password"
+            name="senha"
             class="input-field"
             placeholder="Senha"
             autocomplete="off"
@@ -31,6 +29,7 @@
           />
           <input
             type="password"
+            name="confirmarSenha"
             class="input-field"
             placeholder="Confirmar senha"
             required
@@ -45,8 +44,7 @@
           </select>
         </div>
 
-        <button class="submit-btn">Cadastrar Usuário</button>
+        <button type="submit" class="submit-btn">Cadastrar Usuário</button>
+        </form>
       </div>
     </div>
-  </body>
-</html>

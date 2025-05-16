@@ -36,23 +36,22 @@ button:hover {
   background-color: #45a049;
 }
 
-.info {
-  margin-top: 30px;
-  border-top: 1px solid #ccc;
-  padding-top: 20px;
-  background-color: #fff;
-  padding: 20px;
+.dados-objeto, .assinaturas {
+  border: 1px solid #ccc;
+  padding: 15px;
+  margin-bottom: 20px;
   border-radius: 6px;
-  box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+  background: #f9f9f9;
 }
 
-.assinatura {
-  margin-top: 30px;
+.assinatura label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
 }
 
 .linha {
   height: 30px;
   border-bottom: 1px solid #000;
-  width: 350px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
