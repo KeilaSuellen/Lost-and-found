@@ -8,14 +8,13 @@ if (!isset($_SESSION['usuario'])) {
 
 require 'includes/bd.php';
 
-$stmt = $pdo->query("SELECT * FROM objetos ORDER BY data_cadastro DESC");
+
+$stmt = $pdo->query("SELECT * FROM objetos ORDER BY CAST(SUBSTRING_INDEX(id_objeto, '/', 1) AS UNSIGNED) ASC");
 $objetos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 //titulo da página
-$titulo = "Objetos Cadastrados";
+$titulo = "Painel de Objetos";
 ?>
 <?php include 'includes/header.php' ?>
-<?php include 'includes/navbar.php' ?>
-<?php include 'views/objeto_content.php' ?>
-<?php include 'includes/script.php' ?>
+<?php include 'views/painelobjeto_content.php' ?>
 

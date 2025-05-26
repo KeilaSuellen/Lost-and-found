@@ -33,4 +33,32 @@
         console.error('Erro ao buscar os dados:', error);
       });
 
+
+      function fecharModal() {
+    document.getElementById('modal-excluir').style.display = 'none';
+}
+
+document.querySelectorAll('.btn-excluir').forEach(btn => {
+    btn.addEventListener('click', function () {
+        const id = this.getAttribute('data-id');
+        const nome = this.getAttribute('data-nome');
+
+        document.getElementById('id-usuario').value = id;
+        document.getElementById('nome-usuario').textContent = nome;
+
+        document.getElementById('modal-excluir').style.display = 'block';
+    });
+});
+
+// Fecha ao clicar no X
+document.querySelector('.close').onclick = fecharModal;
+
+// Fecha ao clicar fora do modal
+window.onclick = function(event) {
+    const modal = document.getElementById('modal-excluir');
+    if (event.target == modal) {
+        fecharModal();
+    }
+}
+
 </script>

@@ -14,42 +14,46 @@ $pdo = new PDO('mysql:host=localhost;dbname=lost_and_found', 'root', '');
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/header.css" />
   <title>Menu Principal</title>
 </head>
 <body>
 
   <div class="header">
-    <img src="img/logo.png" alt="Logo" width="90" height="90" />
-    <h1>Olá, <?php echo htmlspecialchars($_SESSION['usuario']); ?></h1>
+  <div class="logo-area">
+    <img id="logo" src="img/logo2.png" alt="Logo" />
+    <span class="site-name">Achados & Perdidos</span>    
   </div>
+  </div>
+
+  <h1 id="title">Olá, <?php echo htmlspecialchars($_SESSION['usuario']); ?></h1>
 
   <div class="content">
     <div class="grid">
 
-      <a href="registroobj.php" class="btn">
-        <img src="img/cadastro.png" alt="Cadastro" />
+      <a href="registroobj.php" class="btn-menu">
+        <img src="img/box.svg" alt="Cadastro" />
         <p>Cadastro de Objetos</p>
       </a>
 
-      <a href="devolucao.php" class="btn">
-        <img src="img/devolucao.png" alt="Devolução" />
+      <a href="devolucao.php" class="btn-menu">
+        <img src="img/undo.svg" alt="Devolução" />
         <p>Devolução de Objetos</p>
       </a>
 
-      <a href="relatorio.php" class="btn">
-        <img src="img/relatorio.png" alt="Relatório" />
+      <a href="relatorio.html" class="btn-menu">
+        <img src="img/file.svg" alt="Relatório" />
         <p>Relatório</p>
       </a>
 
-      <a href="status.html" class="btn">
-        <img src="img/status.png" alt="Status" />
+      <a href="status.html" class="btn-menu">
+        <img src="img/chart.svg" alt="Status" />
         <p>Status</p>
       </a>
 
-      <a href="gerenciamento.php" class="btn">
-        <img src="img/gerenciamento.png" alt="Gerenciamento" />
+      <a href="gerenciamento.php" class="btn-menu">
+        <img src="img/user-cog.svg" alt="Gerenciamento" />
         <p>Gerenciamento de Usuário</p>
       </a>
 

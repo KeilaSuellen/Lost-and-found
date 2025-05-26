@@ -1,85 +1,176 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/relatorio.css" />
-  <title>Relatório</title>
-  </style>
-</head>
-<body>
- <header>
-  <nav id="navbar">
-    <img src="img/logo.png" id="logo" width="110" />
-    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="css/style.css" />
+    <title>Relatório</title>
+  </head>
+  <body>
+    <header>
+      <nav id="navbar">
+        <img src="img/logo2.png" id="logo" width="110" />
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
 
-    <ul id="nav-list">
-      <li class="nav-item"><a href="index.php">Menu Principal</a></li>
-      <li class="nav-item"><a href="registroobj.php" >Cadastro de Objetos</a></li>
-      <li class="nav-item"><a href="devolucao.php">Devolução de Objetos</a></li>
-      <li class="nav-item"><a href="relatorio.html" class="active">Relatório</a></li>
-      <li class="nav-item"><a href="status.html">Status</a></li>
-      <li class="nav-item"><a href="#">Gerenciamento de Usuário</a></li>
-      <li class="nav-item"><a href="logout.php" class="split">Sair</a></li>
-    </ul>  
-  </nav>
-</header>
+        <ul id="nav-list">
+          <li class="nav-item"><a href="index.php">Menu Principal</a></li>
+          <li class="nav-item">
+            <a href="registroobj.php">Cadastro de Objetos</a>
+          </li>
+          <li class="nav-item">
+            <a href="devolucao.php">Devolução de Objetos</a>
+          </li>
+          <li class="nav-item">
+            <a href="relatorio.html" class="active">Relatório</a>
+          </li>
+          <li class="nav-item"><a href="status.html">Status</a></li>
+          <li class="nav-item">
+            <a href="gerenciamento.php">Gerenciamento de Usuário</a>
+          </li>
+          <li class="nav-item"><a href="logout.php" class="split">Sair</a></li>
+        </ul>
+      </nav>
+    </header>
 
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nome</th>
-        <th>Tipo</th>
-        <th>Descrição</th>
-        <th>Data de Registro</th>
-        <th>Data de Devolução</th>
-        <th>Status</th>
-        <th>Operador</th>
-        <th>Observações</th>
-      </tr>
-    </thead>
-    <tbody id="relatorio-body">
-      <!-- Dados serão inseridos aqui via JS -->
-    </tbody>
-  </table>
+    <div id="estatisticas" class="estatisticas">
+      <!-- Conteúdo por JavaScript -->
+    </div>
 
-  <script>
-    async function carregarRelatorio() {
-      try {
-        const response = await fetch('php/relatorio_dados.php');
-        const dados = await response.json();
+    <main>
+      <section class="table-section">
+        <div class="table-header">
+          <h2>Relatório de Itens Perdidos e Encontrados</h2>
+          <div class="export-buttons">
+            <button onclick="exportToPDF()">Exportar como PDF</button>
+          </div>
+        </div>
 
-        if(dados.error) {
-          alert('Erro: ' + dados.error);
+        <table class="table" aria-label="Relatório de objetos">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Categoria</th>
+              <th>Descrição</th>
+              <th>Data de Registro</th>
+              <th>Data de Devolução</th>
+              <th>Status</th>
+              <th>Operador</th>
+              <th>Observações</th>
+            </tr>
+          </thead>
+          <tbody id="relatorio-body">
+            <!-- Conteúdo por JavaScript -->
+          </tbody>
+        </table>
+      </section>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
+    <script>
+      async function carregarRelatorio() {
+        try {
+          const response = await fetch("relatorio_dados.php");
+          const resultado = await response.json();
+
+          const dados = resultado.objetos;
+          const status = resultado.estatisticas;
+
+          // Atualiza as estatísticas
+          document.getElementById("estatisticas").innerHTML = `
+          <h3>Estatísticas</h3>
+           <div class= " card card-total">
+            <h4>Total de Objetos:</h4>
+            <p>${status.total}</p>
+          </div>
+          <div class= "card card-disponivel">
+            <h4>Disponíveis:</h4>
+            <p>${status.disponivel}</p>
+          </div>
+          <div class= "card card-devolvido">
+            <h4>Devolvidos:</h4>
+            <p>${status.devolvido}</p>
+          </div>
+          <div class= "card card-arquivados">
+            <h4>Arquivados:</h4>
+            <p>${status.arquivado}</p>
+          </div>
+        `;
+
+          const tbody = document.getElementById("relatorio-body");
+          tbody.innerHTML = "";
+
+          dados.forEach((item) => {
+            const dataCadastro = item.data_cadastro
+              ? new Date(item.data_cadastro).toLocaleDateString("pt-BR")
+              : "";
+            const dataDevolucao = item.data_devolucao
+              ? new Date(item.data_devolucao).toLocaleDateString("pt-BR")
+              : "";
+
+            const tr = document.createElement("tr");
+
+            tr.innerHTML = `
+            <td data-label = "ID">${item.id_objeto}</td>
+            <td data-label = "Nome">${item.nome_objeto}</td>
+            <td data-label = "Categoria">${item.categoria || ""}</td>
+            <td data-label = "Descrição">${item.descricao || ""}</td>
+            <td data-label = "Data de Cadastro">${dataCadastro}</td>
+            <td data-label = "Data de Devolução">${dataDevolucao}</td>
+            <td data-label = "Status">${item.status || ""}</td>
+            <td data-label = "Operador">${item.operador || ""}</td>
+            <td data-label = "Observações">${
+              item.observacoes ? item.observacoes : "-"
+            }</td>
+            `;
+
+            tbody.appendChild(tr);
+          });
+        } catch (error) {
+          console.error("Erro ao carregar relatório:", error);
+        }
+      }
+
+      // Exportar para PDF
+      function exportToPDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        const table = document.querySelector(".table");
+        const rows = Array.from(table.querySelectorAll("tr"));
+
+        const data = rows.map((row) => {
+          const cells = Array.from(row.querySelectorAll("th, td"));
+          return cells.map((cell) => cell.textContent);
+        });
+
+        if (data.length < 1) {
+          alert("Nenhum dado para exportar.");
           return;
         }
 
-        const tbody = document.getElementById('relatorio-body');
-        tbody.innerHTML = '';
+        const dataAtual = new Date().toLocaleDateString("pt-BR");
+        doc.setFontSize(10);
+        doc.text(`Gerado em: ${dataAtual}`, 14, 22);
 
-        dados.forEach(item => {
-          const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td>${item.id_objeto}</td>
-            <td>${item.nome_objeto}</td>
-            <td>${item.tipo || ''}</td>
-            <td>${item.descricao || ''}</td>
-            <td>${item.data_cadastro}</td>
-            <td>${item.data_devolucao || ''}</td>
-            <td>${item.status || ''}</td>
-            <td>${item.operador || ''}</td>
-            <td>${item.observacoes || ''}</td>
-          `;
-          tbody.appendChild(tr);
+        doc.autoTable({
+          head: [data[0]],
+          body: data.slice(1),
+          starty: 20,
+          style: {
+            fontSize: 10,
+            cellPadding: 2,
+            overflow: "linebreak",
+          },
         });
-      } catch (error) {
-        console.error('Erro ao carregar relatório:', error);
-      }
-    }
 
-    carregarRelatorio();
-  </script>
-</body>
+        const nomeArquivo = `relatorio-${dataAtual.replace(/\//g, "-")}.pdf`;
+        doc.save(nomeArquivo);
+      }
+
+      carregarRelatorio();
+    </script>
+  </body>
 </html>

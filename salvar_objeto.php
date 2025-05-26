@@ -1,8 +1,20 @@
 <?php
+require 'includes/bd.php';
 session_start();
 
 $msg_sucesso = '';
 $nova_pagina = '';
+
+$id_objeto = $_POST['id_objeto'] ?? '';
+
+if($id_objeto){
+    $stmt = $pdo->prepare("UPDATE objetos SET nome_objeto=?, descricao=?, categoria=?, ... WHERE id_objeto=?");
+    $stmt->execute([
+        $_POST['nome_objeto'], $_POST['descricao'], $_POST['categoria'], $id_objeto]);
+}else{
+    $stmt = $pdo->prepare("SELECT MAX(id_objeto) as max_id FROM objetos WHERE id_objeto LIKE '%/$ano'");
+    $stmt->execute();
+}
 
 if (isset($_SESSION['msg_sucesso'])) {
     $msg_sucesso = $_SESSION['msg_sucesso'];
@@ -18,7 +30,7 @@ if (!isset($_SESSION['usuario_id'])) {
     exit();
 }
 
-$pdo = new PDO('mysql:host=localhost;dbname=lost_and_found', 'root', '');
+
 
 // Cria pasta de fotos se não existir
 if (!is_dir('fotos')) {

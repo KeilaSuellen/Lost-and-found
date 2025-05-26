@@ -1,78 +1,99 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <title>Comprovante de Retirada</title>
-  <link rel="stylesheet" href="css/comprovante.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Comprovante de Retirada</title>
+    <link rel="stylesheet" href="css/comprovante.css" />
+  </head>
+  <body>
+    <div class="topo-voltar">
+      <button onclick="window.location.href='devolucao.php'">← Voltar</button>
+    </div>
 
-  <h2>Comprovante de Retirada de Objeto</h2>
+    <h2>Comprovante de Retirada de Objeto</h2>
 
-  <label for="idBusca">ID do Objeto:</label>
-  <input type="text" id="idBusca" />
-  <button onclick="mostrarDados()">Buscar</button>
+    <label for="idBusca">ID do Objeto:</label>
+    <input type="text" id="idBusca" />
+    <button onclick="mostrarDados()">Buscar</button>
 
-  <div id="dados" style="display: none;">
+    <div id="dados" style="display: none; margin-top: 30px">
+      <section class="dados-objeto">
+        <h3>Dados do Objeto</h3>
+        <p><strong>ID:</strong> <span id="id_objeto"></span></p>
+        <p><strong>Objeto:</strong> <span id="nome_objeto"></span></p>
+        <p>
+          <strong>Local Encontrado:</strong> <span id="local_encontrado"></span>
+        </p>
+        <p>
+          <strong>Data da Entrega:</strong> <span id="data_cadastro"></span>
+        </p>
+      </section>
 
-    <section class="dados-objeto">
-      <h3>Dados do Objeto</h3>
-      <p><strong>ID:</strong> <span id="id_objeto"></span></p>
-      <p><strong>Objeto:</strong> <span id="nome_objeto"></span></p>
-      <p><strong>Local Encontrado:</strong> <span id="local_encontrado"></span></p>
-      <p><strong>Data da Entrega:</strong> <span id="data_cadastro"></span></p>
-    </section>
+      <section class="assinaturas">
+        <div class="assinatura cliente">
+          <h3>Preenchimento do Cliente</h3>
+          <label>Nome:</label>
+          <div class="linha"></div>
 
-    <section class="assinaturas">
-      <div class="assinatura cliente">
-        <h3>Preenchimento do Cliente</h3>
-        <label>Nome:</label>
-        <div class="linha"></div>
+          <label>Documento:</label>
+          <div class="linha"></div>
 
-        <label>Documento:</label>
-        <div class="linha"></div>
+          <label>Empresa:</label>
+          <div class="linha"></div>
 
-        <label>Empresa:</label>
-        <div class="linha"></div>
+          <label>Assinatura:</label>
+          <div class="linha"></div>
+        </div>
 
-        <label>Assinatura:</label>
-        <div class="linha"></div>
+        <div class="assinatura operador">
+          <h3>Preenchimento do Operador</h3>
+          <label>Responsável pela entrega:</label>
+          <div class="linha"></div>
+        </div>
+      </section>
+
+      <div class="botoes">
+        <button onclick="window.print()">Imprimir Comprovante</button>
       </div>
+    </div>
 
-      <div class="assinatura operador">
-        <h3>Preenchimento do Operador</h3>
-        <label>Responsável pela entrega:</label>
-        <div class="linha"></div>
-      </div>
-    </section>
+    <script>
+      function mostrarDados() {
+        const id = document.getElementById("idBusca").value;
+        if (id.trim() === "") {
+          alert("Por favor, insira um ID válido.");
+          return;
+        }
+        // Limpa os dados anteriores
+        fetch("buscar_objeto.php?id=" + encodeURIComponent(id))
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.erro) {
+              alert("Objeto não encontrado.");
+              document.getElementById("dados").style.display = "none";
+            } else {
+              document.getElementById("dados").style.display = "block";
 
-    <button onclick="window.print()">Imprimir Comprovante</button>
+              document.getElementById("id_objeto").innerText = data.id_objeto;
+              document.getElementById("nome_objeto").innerText =
+                data.nome_objeto;
+              document.getElementById("local_encontrado").innerText =
+                data.local_encontrado;
+              document.getElementById("data_cadastro").innerText =
+                data.data_cadastro;
+            }
+          })
+          .catch((error) => {
+            console.error("Erro ao buscar os dados:", error);
+            alert("Erro ao buscar os dados. Tente novamente mais tarde.");
+          });
+      }
 
-  </div>
-
-  <script>
-    function mostrarDados() {
-      const id = document.getElementById("idBusca").value;
-      fetch('buscar_objeto.php?id=' + encodeURIComponent(id))
-        .then(response => response.json())
-        .then(data => {
-          if (data.erro){
-            alert('Objeto não encontrado.');
-            document.getElementById("dados").style.display = "none";
-          } else {
-            document.getElementById("dados").style.display = "block";
-
-            document.getElementById("id_objeto").innerText = data.id;
-            document.getElementById("nome_objeto").innerText = data.nome_objeto;
-            document.getElementById("local_encontrado").innerText = data.local_encontrado;
-            document.getElementById("data_cadastro").innerText = data.data_cadastro;
-          }
-        })
-        .catch(error => {
-          console.error('Erro ao buscar os dados:', error);
-        });
-    }
-  </script>
-
-</body>
+      function voltar() {
+        document.getElementById("dados").style.display = "none";
+        document.getElementById("idBusca").value = "";
+        document.getElementById("idBusca").focus();
+      }
+    </script>
+  </body>
 </html>

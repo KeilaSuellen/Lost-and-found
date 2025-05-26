@@ -5,13 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Status dos Objetos</title>
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/status.css">
 </head>
 <body>
 
   <header>
   <nav id="navbar">
-    <img src="img/logo.png" id="logo" width="110" />
+    <img src="img/logo2.png" id="logo" width="110" />
     <button class="menu-toggle" onclick="toggleMenu()">☰</button>
 
     <ul id="nav-list">
@@ -20,7 +19,7 @@
       <li class="nav-item"><a href="devolucao.php">Devolução de Objetos</a></li>
       <li class="nav-item"><a href="relatorio.html">Relatório</a></li>
       <li class="nav-item"><a href="status.html" class="active">Status</a></li>
-      <li class="nav-item"><a href="#">Gerenciamento de Usuário</a></li>
+      <li class="nav-item"><a href="gerenciamento.php">Gerenciamento de Usuário</a></li>
       <li class="nav-item"><a href="logout.php" class="split">Sair</a></li>
     </ul>  
   </nav>
@@ -32,13 +31,14 @@
         <tr>
           <th>ID</th>
           <th>Nome</th>
-          <th>Tipo</th>
+          <th>Categoria</th>
           <th>Descrição</th>
           <th>Status</th>
+          <th>Ação</th>
         </tr>
       </thead>
       <tbody id="status-body">
-        <!-- Conteúdo carregado por JavaScript -->
+        <!-- Conteúdo por JavaScript -->
       </tbody>
     </table>
   </div>
@@ -55,16 +55,23 @@
                                obj.status === 'Arquivado' ? 'status-arquivado' :
                                'status-disponivel';
 
-          row.innerHTML = `
-            <td>${obj.id_objeto}</td>
-            <td>${obj.nome_objeto}</td>
-            <td>${obj.tipo_objeto}</td>
-            <td>${obj.descricao}</td>
-            <td class="${statusClasse}">${obj.status}</td>
-          `;
-          tbody.appendChild(row);
-        });
-      })
+              row.innerHTML = `
+          <td>${obj.id_objeto}</td>
+          <td>${obj.nome_objeto}</td>
+          <td>${obj.categoria}</td>
+          <td>${obj.descricao}</td>
+          <td class="${statusClasse}">${obj.status}</td>
+          <td>
+            ${obj.status === 'Disponível' ? 
+              `<a href="devolucao.php?id=${obj.id_objeto}" class="botao-retirar">Retirar</a>` 
+              : ''
+            }
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    })
+
       .catch(error => {
         console.error('Erro ao buscar os dados:', error);
       });
