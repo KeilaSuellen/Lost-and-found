@@ -9,7 +9,7 @@
             <p style="color:red;"><?php echo $erro; ?></p>
         <?php endif; ?>
     
-        <form action="controllers/login.php" method="post">
+        <form action="login.php" method="post">
             <div class="input-box">
                 <input type="text" name="usuario" class="input-field" placeholder="Nome de Usuario" autocomplete="off" required>
                 <input type="password" name="senha" class="input-field" placeholder="Senha" autocomplete="off" required>
